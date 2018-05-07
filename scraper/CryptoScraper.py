@@ -1,16 +1,15 @@
 # coding: utf-8
 
 from __future__ import absolute_import, unicode_literals
-from scraper.Base import CryptScraperBase
+from scraper.Base import CryptoScraperBase
 from schema.DataSchema import DataSchema
 
 from lxml import html
-import re
 import time
 import requests
 
 
-class CryptoScraper(CryptScraperBase):
+class CryptoScraper(CryptoScraperBase):
 
     def __init__(self, currencies_to_scrape):
         """
@@ -114,21 +113,14 @@ class CryptoScraper(CryptScraperBase):
                 crypt_currency[key] = str(info).replace("\n",'')
             elif key in('price', 'market_cap', 'volume'):
                 info = limb.xpath(path)[0]
-                crypt_currency[key] = clean_currency_amount(info)
+                crypt_currency[key] = CryptoScraper.clean_currency_amount(info)
             else:
                 info = limb.xpath(path)[0]
                 crypt_currency[key] = info
 
         # append current timestamp
-        crypt_currency['date'] = int(time.time())
+        crypt_currency['timestamp'] = int(time.time())
 
         # append the exchange_symbol
         crypt_currency['price_symbol'] = price_symbol.upper()
         return crypt_currency
-
-def clean_currency_amount(data):
-    m = re.search(r'^\S([,\d.]+)', data)
-    if m:
-        return m.group(1).replace(',','')
-    else:
-        return data

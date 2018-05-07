@@ -3,4 +3,6 @@ encoding//schema/DataSchema.py=utf-8
 encoding//scraper/Base.py=utf-8
 encoding//scraper/CryptoScraper.py=utf-8
 encoding//scraper/GeckoScraper.py=utf-8
+encoding//scraper/MarketCapScraper.py=utf-8
+encoding//tests/test_CryptoScraper.py=utf-8
 encoding/Scraper.py=utf-8
